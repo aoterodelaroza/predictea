@@ -17,7 +17,9 @@ function [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,verbose
   for i = 1:20
     pi = 10^i;
     pend = fun(pi);
-    printf("+ pend = %.2f\n\n",pend);
+    if (verbose)
+      printf("+ pend = %.2f\n\n",pend);
+    endif
     if (pend > 0)
       break
     endif
