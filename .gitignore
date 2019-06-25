@@ -4,5 +4,8 @@
 *.smod
 *.a
 
+# EOS directory
+.eos/
+
 # emacs backups
 *~
