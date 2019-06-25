@@ -11,8 +11,7 @@ function [rr, pr, mr, idcomp, idphase] = p_integrate(mprofile,p0,verbose=0)
   global __npts__
 
   ## constants
-  __reltol__ = 1e-10;
-  __abstol__ = 1e-8;
+  __reltol__ = 1e-8;
 
   ## tracking variable initialization
   rcur = 0.00001; ## current radius (initial = 63.7 meters)
@@ -90,7 +89,7 @@ function [rr, pr, mr, idcomp, idphase] = p_integrate(mprofile,p0,verbose=0)
       printf("  ptarget = %.6f GPa | mtarget = %.6f Emass\n",ptarget,mtarget);
     endif
     warning ("off", "integrate_adaptive:unexpected_termination", "local");
-    opt = odeset("Events",fevn,"RelTol",__reltol__,"AbsTol",__abstol__);
+    opt = odeset("Events",fevn,"RelTol",__reltol__);
     [r,y,re,ye,ie] = ode45(fun, [rcur,Inf], [pcur mcur], opt);
 
     ## Handle the case when there have been more than one event. This
