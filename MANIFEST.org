@@ -1,0 +1,18 @@
+List of functions
+
+* [rr pr mr idcomp idphase] = p_integrate(mprofile,p0);
+
+Integrate the mass profile mprofile with an initial pressure p0.
+Returns the radius, pressure, mass, component, and phase profile.
+
+* write_table(mprofile,rr,pr,mr,idcomp,idphase,file="")
+
+Output a nicely formatted table with the results of an integration to
+file or to stdout if no file is given. 
+
+* function [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,verbose=0)
+
+Integrate a planet defined by the mass profile mprofile and output
+the radii, pressure, mass, and phase/material DI profiles.
+
+
