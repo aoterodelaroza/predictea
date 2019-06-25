@@ -14,9 +14,10 @@ function [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,verbose
   fun = @(p0) nthargout(2,@p_integrate,mprofile,p0,verbose)(end);
 
   ## initial bracketing
-  for i = 1:10
+  for i = 1:20
     pi = 10^i;
     pend = fun(pi);
+    printf("+ pend = %.2f\n\n",pend);
     if (pend > 0)
       break
     endif
