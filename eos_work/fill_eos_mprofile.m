@@ -41,6 +41,10 @@ function mprofile = fill_eos_mprofile(mprofile0,pmax0)
       mprofile.eoscomp{icomp}.rhomax(iprange) = rhomax;
       mprofile.eoscomp{icomp}.pmax(iprange) = pmax;
     endfor  
+
+    if (isfield(mprofile.eoscomp{icomp},"alpha"))
+      mprofile.eoscomp{icomp}.rho(1:__npts__,1:mprofile.eoscomp{icomp}.nrange) *= mprofile.eoscomp{icomp}.alpha;
+    endif
   endfor
 
 endfunction

@@ -13,20 +13,20 @@ source("./init.m");
 
 ## test
 
-mprofile = struct();
-mprofile.prefix = "planet"; ## prefix for the generated files
-mprofile.mtotal = 3980; ## in Earth's mass.
-mprofile.ncomp = 1; ## Number of components (in order, from r=0, outwards)
-mprofile.xcomp = []; ## % in mass of each component (1...ncomp-1). Last one is implied.
-mprofile.eoscomp = {eos.h};
-mprofile = fill_eos_mprofile(mprofile,1000);
+## mprofile = struct();
+## mprofile.prefix = "planet"; ## prefix for the generated files
+## mprofile.mtotal = 3980; ## in Earth's mass.
+## mprofile.ncomp = 1; ## Number of components (in order, from r=0, outwards)
+## mprofile.xcomp = []; ## % in mass of each component (1...ncomp-1). Last one is implied.
+## mprofile.eoscomp = {eos.h};
+## mprofile = fill_eos_mprofile(mprofile,1000);
+## ## [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,1);
+## tic
 ## [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,1);
-tic
-[rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,1);
-## [rr pr mr idcomp idphase] = p_integrate(mprofile,100,1);
-write_table(mprofile,rr,pr,mr,idcomp,idphase);
-toc
-exit
+## ## [rr pr mr idcomp idphase] = p_integrate(mprofile,100,1);
+## write_table(mprofile,rr,pr,mr,idcomp,idphase);
+## toc
+## exit
 
 ## ## Seager plot
 ## listeos = {eos.h, eos.he, eos.mgsio3, eos.fe};
@@ -96,3 +96,20 @@ exit
 ## [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,1);
 ## write_table(mprofile,rr,pr,mr,idcomp,idphase);
 
+## results for ICTEA
+for ix = 0:10
+  xh2o = ix / 10;
+  xfe = 0.33 * (1-xh2o);
+  xsi = 1 - xfe - xh2o;
+
+  mprofile = struct();
+  mprofile.prefix = "ictea"; ## prefix for the generated files
+  mprofile.mtotal = 6.8; ## in Earth's mass.
+  mprofile.ncomp = 3; ## Number of components (in order, from r=0, outwards)
+  mprofile.xcomp = [xfe, xsi]; ## % in mass of each component (1...ncomp-1). Last one is implied.
+  mprofile.eoscomp = {eos.fe9, eos.sic, eos.h2o}; ## component EOS
+  mprofile = fill_eos_mprofile(mprofile,1000);
+
+  [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,0);
+  write_table(mprofile,rr,pr,mr,idcomp,idphase);
+endfor

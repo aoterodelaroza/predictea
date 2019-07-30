@@ -58,7 +58,7 @@ function eoslib = eos_library()
   eoslib.sic.rangename = {"B3"}; ## name of the ranges
   eoslib.sic.prange = [-Inf Inf]; ## pressure ranges in GPa
   eoslib.sic.eostype = { ## types of EOSs
-                        "vinet",... ## ice VII
+                        "vinet",... ## SiC
   };
   eoslib.sic.param = [ ## EOS parameters
                        3.214934847198981 227 5.57
@@ -80,6 +80,26 @@ function eoslib = eos_library()
                       7.874365 164.0 5.50 ## bcc-Fe (alpha), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
                       8.191419 148.0 5.86 ## hcp-Fe (epsilon), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
   ]; 
+
+  ##xx## EOS for iron, with a 0.9 coefficient
+  ## Dorogokupets et al., Sci. Rep. 7 (2017) 41863
+  ## Thermodynamics and Equations of State of Iron to 350 GPa and 6000 K
+  eoslib.fe9 = struct();
+  eoslib.fe9.name = "Iron-0.9"; ## name of the material
+  eoslib.fe9.nrange = 2; ## number of pressure ranges
+  eoslib.fe9.rangename = {"bcc-Fe (alpha) 90%","hcp-Fe (epsilon) 90%"}; ## name of the ranges
+  eoslib.fe9.prange = [-Inf 16 Inf]; ## pressure ranges in GPa
+  eoslib.fe9.eostype = { ## types of EOSs
+                        "vinet_rydberg",... ## bcc-Fe (alpha)
+                        "vinet_rydberg",... ## hcp-Fe (epsilon)
+  };
+  eoslib.fe9.param = [ ## EOS parameters
+                      7.874365 164.0 5.50 ## bcc-Fe (alpha), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
+                      8.191419 148.0 5.86 ## hcp-Fe (epsilon), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
+  ]; 
+  eoslib.fe9.alpha = 0.9; ## prefactor for the density(p) curve. Scales the density.
+
+  ##xx## EOS for iron
 
   ##xx## EOS for MgSiO3, perovskite and post-perovskite
   ## Perovskite:
