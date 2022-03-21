@@ -60,6 +60,7 @@ function [rr, pr, mr, idcomp, idphase] = p_integrate(mprofile,p0,verbose=0)
     if (pcur > mprofile.eoscomp{idxm}.pmax(idxp))
       ## make a new EOS file
       make_eoswho(mprofile.eoscomp{idxm}.eostype{idxp},mprofile.eoscomp{idxm}.param(idxp,:),...
+                  mprofile.eoscomp{idxm}.tfdparam,...
                   mprofile.eoscomp{idxm}.whofile{idxp},10*pcur,__npts__);
       ## Read the EOS file and populate the EOS arrays
       [eostype eosparam n pmax rhomax rho_ p_] = read_eoswho(mprofile.eoscomp{idxm}.whofile{idxp},0);

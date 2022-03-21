@@ -4,7 +4,7 @@ function mprofile = fill_eos_mprofile(mprofile0,pmax0)
   ## Fill the EOS fields in the mass profile up to a pressure pmax0
   ## (GPa). Returns the mass profile with all EOS prepared for
   ## interpolation.
-  
+
   global __npts__
 
   mprofile = mprofile0;
@@ -31,7 +31,7 @@ function mprofile = fill_eos_mprofile(mprofile0,pmax0)
       endif
       if (makeeos)
         make_eoswho(mprofile.eoscomp{icomp}.eostype{iprange},mprofile.eoscomp{icomp}.param(iprange,:),...
-                    file,pmax0,__npts__);
+                    mprofile.eoscomp{icomp}.tfdparam,file,pmax0,__npts__);
       endif
 
       ## Read the EOS file and populate the EOS arrays
@@ -40,7 +40,7 @@ function mprofile = fill_eos_mprofile(mprofile0,pmax0)
       mprofile.eoscomp{icomp}.p(1:__npts__,iprange) = p';
       mprofile.eoscomp{icomp}.rhomax(iprange) = rhomax;
       mprofile.eoscomp{icomp}.pmax(iprange) = pmax;
-    endfor  
+    endfor
 
     if (isfield(mprofile.eoscomp{icomp},"alpha"))
       mprofile.eoscomp{icomp}.rho(1:__npts__,1:mprofile.eoscomp{icomp}.nrange) *= mprofile.eoscomp{icomp}.alpha;

@@ -2,12 +2,12 @@
 
 function eoslib = eos_library()
   ## Create and populate the EOS library object.
-  
+
   eoslib = struct();
 
   ##xx## EOS for hydrogen, experimental 300 K isotherm, up to ~130 GPa.
-  ## Loubeyre, P. et al. Nature, 383 (1996), 702. 
-  ## X-ray diffraction and equation of state of hydrogen at megabar pressures. 
+  ## Loubeyre, P. et al. Nature, 383 (1996), 702.
+  ## X-ray diffraction and equation of state of hydrogen at megabar pressures.
   eoslib.h = struct();
   eoslib.h.name = "Hydrogen";
   eoslib.h.nrange = 1;
@@ -19,6 +19,7 @@ function eoslib = eos_library()
   eoslib.h.param = [
                     0.0792624 0.162 6.813
   ];
+  eoslib.h.tfdparam = {[],[],[]};
 
   ##xx## EOS for helium
   ## P. Loubeyre et al., Phys. Rev. Lett. 71 (1993) 2272
@@ -34,6 +35,7 @@ function eoslib = eos_library()
   eoslib.he.param = [
                     0.2917348 0.225 7.35
   ];
+  eoslib.he.tfdparam = {[],[],[]};
 
   ##xx## EOS for ice VII
   ## Frank et al. Geochim. Cosmo. Acta 68 (2004) 2781.
@@ -48,7 +50,8 @@ function eoslib = eos_library()
   };
   eoslib.h2o.param = [ ## EOS parameters
                        1.45284516 21.1 4.4 0.0
-  ]; 
+  ];
+  eoslib.h2o.tfdparam = {[],[],[]};
 
   ##xx## EOS for SiC
   ## Hysteresis and bonding reconstruction in the pressure-induced B3–B1 phase transition of 3C-SiC
@@ -62,7 +65,8 @@ function eoslib = eos_library()
   };
   eoslib.sic.param = [ ## EOS parameters
                        3.214934847198981 227 5.57
-  ]; 
+  ];
+  eoslib.sic.tfdparam = {[],[],[]};
 
   ##xx## EOS for iron
   ## Dorogokupets et al., Sci. Rep. 7 (2017) 41863
@@ -79,7 +83,8 @@ function eoslib = eos_library()
   eoslib.fe.param = [ ## EOS parameters
                       7.874365 164.0 5.50 ## bcc-Fe (alpha), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
                       8.191419 148.0 5.86 ## hcp-Fe (epsilon), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
-  ]; 
+  ];
+  eoslib.fe.tfdparam = {[],[],[]};
 
   ##xx## EOS for iron, with a 0.9 coefficient
   ## Dorogokupets et al., Sci. Rep. 7 (2017) 41863
@@ -96,8 +101,9 @@ function eoslib = eos_library()
   eoslib.fe9.param = [ ## EOS parameters
                       7.874365 164.0 5.50 ## bcc-Fe (alpha), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
                       8.191419 148.0 5.86 ## hcp-Fe (epsilon), Vinet-Rydberg EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
-  ]; 
+  ];
   eoslib.fe9.alpha = 0.9; ## prefactor for the density(p) curve. Scales the density.
+  eoslib.fe9.tfdparam = {[],[],[]};
 
   ##xx## EOS for iron
 
@@ -120,7 +126,39 @@ function eoslib = eos_library()
   eoslib.mgsio3.param = [ ## EOS parameters
                           4.1065779 256.7 4.09 0.0 ## perovskite
                           4.0594020 203.0 5.35 2.19 ## post-perovskite
-  ]; 
+  ];
+
+  ##xx## The EOS used by Seager (more or less)
+  eoslib.fe_seager = struct();
+  eoslib.fe_seager.name = "Iron"; ## name of the material
+  eoslib.fe_seager.nrange = 2; ## number of pressure ranges
+  eoslib.fe_seager.rangename = {"e-Fe(vinet)","tfd"}; ## name of the ranges
+  eoslib.fe_seager.prange = [-Inf 23218 Inf]; ## pressure ranges in GPa
+  eoslib.fe_seager.eostype = { ## types of EOSs
+                        "vinet",... ## e-Fe (vinet)
+                        "tfd",...   ## Fe (tfd)
+  };
+  eoslib.fe_seager.param = [ ## EOS parameters
+                             8.30 156.2 6.08 ## e-Fe (vinet), Vinet EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
+                             0.00 0.00  0.00
+  ];
+  eoslib.fe_seager.tfdparam = {[55.845],[26],[1]};
+
+  eoslib.mgsio3_seager = struct();
+  eoslib.mgsio3_seager.name = "silicate"; ## name of the material
+  eoslib.mgsio3_seager.nrange = 2; ## number of pressure ranges
+  eoslib.mgsio3_seager.rangename = {"pv(bm4)","tfd"}; ## name of the ranges
+  eoslib.mgsio3_seager.prange = [-Inf 8224 Inf]; ## pressure ranges in GPa
+  eoslib.mgsio3_seager.eostype = { ## types of EOSs
+                        "bm4",... ## pv (bm4)
+                        "tfd",... ## MgSiO3 (tfd)
+  };
+  eoslib.mgsio3_seager.param = [ ## EOS parameters
+                                 4.10 247 3.97 -0.016 ## pv (bm4), (rho0, B0, B0', B0'') in (g/cm^3, GPa, ., GPa^-1)
+                                 0.00 0.0 0.00  0.00
+  ];
+  eoslib.mgsio3_seager.tfdparam = {[24.305 28.0855 15.9994],[12 14 8],[1 1 3]};
+
 
   ##########
 
@@ -137,7 +175,8 @@ function eoslib = eos_library()
   eoslib.fe_paco.param = [ ## EOS parameters
                            7.012 83.7 5.97 ## liquid
                            8.30 156.2 6.08 ## epsilon
-  ]; 
+  ];
+  eoslib.fe_paco.tfdparam = {[],[],[]};
 
   ## EOS for core (Stacey et al., Phys. Earth Planet. Inter. 142 (2004) 137-184)
   eoslib.fe_core = struct();
@@ -150,7 +189,8 @@ function eoslib = eos_library()
   };
   eoslib.fe_core.param = [ ## EOS parameters
                            6.563 125 4.96
-  ]; 
+  ];
+  eoslib.fe_core.tfdparam = {[],[],[]};
 
   ##xx## EOS for mantle (Paco, ref?)
   eoslib.mgsio4_paco = struct();
@@ -166,6 +206,7 @@ function eoslib = eos_library()
                                3.55 182.0 4.2 ## mg2sio4
                                3.94 220.89 4.15 ## mgsio3 + mgo
   ];
+  eoslib.mgsio4_paco.tfdparam = {[],[],[]};
 
   ## EOS for mantle (Stacey et al., Phys. Earth Planet. Inter. 142 (2004) 137-184)
   eoslib.mgsio4_mantle = struct();
@@ -179,6 +220,7 @@ function eoslib = eos_library()
   eoslib.mgsio4_mantle.param = [ ## EOS parameters
                        3.977 206 4.20 ## pure Mgsio4 at 300K, BM3 EOS, (rho0, B0, B0') in (g/cm^3, GPa, .)
   ];
+  eoslib.mgsio4_mantle.tfdparam = {[],[],[]};
 
   ## fill some empty fields for later
   fs = fieldnames(eoslib);
