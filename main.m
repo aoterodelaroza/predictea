@@ -60,29 +60,17 @@ source("./init.m");
 ##   printf("\n\n");
 ## endfor
 
-## results for Earth
-mprofile = struct();
-mprofile.prefix = "earth"; ## prefix for the generated files
-mprofile.mtotal = 1; ## in Earth's mass.
-mprofile.ncomp = 2; ## Number of components (in order, from r=0, outwards)
-mprofile.xcomp = [0.205]; ## % in mass of each component (1...ncomp-1). Last one is implied.
-mprofile.eoscomp = {eos.fe_seager, eos.mgsio3_seager}; ## component EOS
-mprofile = fill_eos_mprofile(mprofile,1000);
-
-[rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,0);
-write_table(mprofile,rr,pr,mr,idcomp,idphase);
-
-## ## results for Jupiter
-## mprofile = struct();
-## mprofile.prefix = "jupiter"; ## prefix for the generated files
-## mprofile.mtotal = 317; ## in Earth's mass.
-## mprofile.ncomp = 2; ## Number of components (in order, from r=0, outwards)
-## mprofile.xcomp = [0.10]; ## % in mass of each component (1...ncomp-1). Last one is implied.
-## mprofile.eoscomp = {eos.he, eos.h}; ## component EOS
-## mprofile = fill_eos_mprofile(mprofile,1000);
-##
-## [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,1);
-## write_table(mprofile,rr,pr,mr,idcomp,idphase);
+# ## results for Earth
+# mprofile = struct();
+# mprofile.prefix = "earth"; ## prefix for the generated files
+# mprofile.mtotal = 1; ## in Earth's mass.
+# mprofile.ncomp = 2; ## Number of components (in order, from r=0, outwards)
+# mprofile.xcomp = [0.205]; ## % in mass of each component (1...ncomp-1). Last one is implied.
+# mprofile.eoscomp = {eos.fe_seager, eos.mgsio3_seager}; ## component EOS
+# mprofile = fill_eos_mprofile(mprofile,1000);
+#
+# [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,0);
+# write_table(mprofile,rr,pr,mr,idcomp,idphase);
 
 ## ## results for mystery planet
 ## mprofile = struct();
@@ -100,7 +88,7 @@ write_table(mprofile,rr,pr,mr,idcomp,idphase);
 ##   xh2o = ix / 10;
 ##   xfe = 0.33 * (1-xh2o);
 ##   xsi = 1 - xfe - xh2o;
-## 
+##
 ##   mprofile = struct();
 ##   mprofile.prefix = "ictea"; ## prefix for the generated files
 ##   mprofile.mtotal = 6.8; ## in Earth's mass.
@@ -108,7 +96,19 @@ write_table(mprofile,rr,pr,mr,idcomp,idphase);
 ##   mprofile.xcomp = [xfe, xsi]; ## % in mass of each component (1...ncomp-1). Last one is implied.
 ##   mprofile.eoscomp = {eos.fe9, eos.sic, eos.h2o}; ## component EOS
 ##   mprofile = fill_eos_mprofile(mprofile,1000);
-## 
+##
 ##   [rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,0);
 ##   write_table(mprofile,rr,pr,mr,idcomp,idphase);
 ## endfor
+
+## results for Earth
+mprofile = struct();
+mprofile.prefix = "jupiter"; ## prefix for the generated files
+mprofile.mtotal = 318; ## in Earth's mass.
+mprofile.ncomp = 2; ## Number of components (in order, from r=0, outwards)
+mprofile.xcomp = [0.1]; ## % in mass of each component (1...ncomp-1). Last one is implied.
+mprofile.eoscomp = {eos.he_seager,eos.h_seager}; ## component EOS
+mprofile = fill_eos_mprofile(mprofile,1000);
+
+[rr, pr, mr, idcomp, idphase, ierr] = planet_integrate(mprofile,0);
+write_table(mprofile,rr,pr,mr,idcomp,idphase);

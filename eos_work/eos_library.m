@@ -21,6 +21,22 @@ function eoslib = eos_library()
   ];
   eoslib.h.tfdparam = {[],[],[]};
 
+  ## EOS for seager-H
+  eoslib.h_seager = struct();
+  eoslib.h_seager.name = "Hydrogen-Seager";
+  eoslib.h_seager.nrange = 2;
+  eoslib.h_seager.rangename = {"vinet","tfd"};
+  eoslib.h_seager.prange = [-Inf 11.08 Inf];
+  eoslib.h_seager.eostype = {
+			     "vinet",...
+			     "tfd",...
+  };
+  eoslib.h_seager.param = [
+                           0.0792624 0.162 6.813
+			   0.0 0.0 0.0
+  ];
+  eoslib.h_seager.tfdparam = {[1.00784],[1],[1]};
+
   ##xx## EOS for helium
   ## P. Loubeyre et al., Phys. Rev. Lett. 71 (1993) 2272
   ## Equation of state and phase diagram of solid 4He from single-crystal x-ray diffraction over a large P-T domain
@@ -36,6 +52,22 @@ function eoslib = eos_library()
                     0.2917348 0.225 7.35
   ];
   eoslib.he.tfdparam = {[],[],[]};
+
+  ## EOS for seager-He
+  eoslib.he_seager = struct();
+  eoslib.he_seager.name = "Helium-Seager";
+  eoslib.he_seager.nrange = 2;
+  eoslib.he_seager.rangename = {"vinet","tfd"};
+  eoslib.he_seager.prange = [-Inf 1.21 Inf];
+  eoslib.he_seager.eostype = {
+			      "vinet",...
+			      "tfd",...
+  };
+  eoslib.he_seager.param = [
+                            0.2917348 0.225 7.35
+			    0.0 0.0 0.0
+  ];
+  eoslib.he_seager.tfdparam = {[4.002602],[2],[1]};
 
   ##xx## EOS for ice VII
   ## Frank et al. Geochim. Cosmo. Acta 68 (2004) 2781.
@@ -67,6 +99,22 @@ function eoslib = eos_library()
                        3.214934847198981 227 5.57
   ];
   eoslib.sic.tfdparam = {[],[],[]};
+
+  ## EOS for seager-SiC
+  eoslib.sic_seager = struct();
+  eoslib.sic_seager.name = "SiC-Seager"; ## name of the material
+  eoslib.sic_seager.nrange = 2; ## number of pressure ranges
+  eoslib.sic_seager.rangename = {"vinet","tfd"}; ## name of the ranges
+  eoslib.sic_seager.prange = [-Inf 2.4861e+6 Inf]; ## presure ranges in GPa
+  eoslib.sic_seager.eostype = {## types of EOSs
+                              "vinet",... ## low pressure
+                              "tfd",... ## high pressure
+  };
+  eoslib.sic_seager.param = [ ## EOS parameters
+                             3.214934847198981 227 5.57 ## vinet
+                             0.0 0.0 0.0 ## empty
+  ];
+  eoslib.sic_seager.tfdparam = {[28.085 12.0107],[14 6],[1 1]};
 
   ##xx## EOS for iron
   ## Dorogokupets et al., Sci. Rep. 7 (2017) 41863
