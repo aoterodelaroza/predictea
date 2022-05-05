@@ -21,9 +21,16 @@ function [rhomax, pmax] = make_eoswho(eostype,eosparam,tfdparam,file,pmax0,n)
     fac = 1.1;
     rhomax = eosparam(1)*fac;
     pmax = fun(rhomax);
+    pold = -Inf;
     while (pmax < pmax0)
       rhomax = rhomax * fac;
+      pold = pmax;
       pmax = fun(rhomax);
+      if (pmax < pold)
+        pmax = pold;
+        rhomax = rhomax / fac;
+        break
+      endif
     endwhile
 
     rho = linspace(rhomax,eosparam(1),n);

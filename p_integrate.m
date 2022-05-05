@@ -68,6 +68,9 @@ function [rr, pr, mr, idcomp, idphase] = p_integrate(mprofile,p0,verbose=0)
       mprofile.eoscomp{idxm}.p(1:__npts__,idxp) = p_';
       mprofile.eoscomp{idxm}.rhomax(idxp) = rhomax;
       mprofile.eoscomp{idxm}.pmax(idxp) = pmax;
+      if (pmax < pcur)
+        error(sprintf("the equation of state cannot generate pressure pcur = %.10f (pmax = %.10f)",pcur,pmax))
+      endif
     endif
 
     ## calculate the mass and pressure at which we need to stop the integration
